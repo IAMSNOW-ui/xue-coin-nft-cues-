@@ -36,3 +36,549 @@
   </button>
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>cueXcoin NFT Pool Cues</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    :root {
+      --bg: #050516;
+      --panel: #0b0b2a;
+      --accent: #32b8c6;
+      --accent2: #a46bff;
+      --text: #f8f2ff;
+      --muted: #8a8aac;
+      --danger: #ff4d6a;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #181850 0, var(--bg) 60%);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    header {
+      width: 100%;
+      max-width: 1100px;
+      padding: 1rem 1.25rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .brand {
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.85rem;
+      color: var(--accent);
+    }
+    .tagline {
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+    main {
+      width: 100%;
+      max-width: 1100px;
+      padding: 0 1.25rem 2rem;
+      display: grid;
+      grid-template-columns: minmax(0, 3fr) minmax(0, 2.5fr);
+      gap: 1.5rem;
+    }
+    @media (max-width: 800px) {
+      main {
+        grid-template-columns: 1fr;
+      }
+    }
+    .card {
+      background: linear-gradient(135deg, #0b0b2a, #050516);
+      border-radius: 16px;
+      padding: 1.25rem;
+      border: 1px solid rgba(255,255,255,0.06);
+      box-shadow: 0 18px 40px rgba(0,0,0,0.65);
+    }
+    h1 {
+      margin: 0;
+      font-size: 1.4rem;
+    }
+    h2 {
+      margin: 0 0 0.75rem;
+      font-size: 1.05rem;
+    }
+    .sub {
+      margin-top: 0.25rem;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+    .builder-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.45fr) minmax(0, 1.1fr);
+      gap: 1rem;
+    }
+    @media (max-width: 600px) {
+      .builder-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    .field {
+      margin-bottom: 0.7rem;
+    }
+    .field label {
+      display: block;
+      font-size: 0.8rem;
+      margin-bottom: 0.25rem;
+    }
+    select, input[type="range"] {
+      width: 100%;
+    }
+    select {
+      background: #101034;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.09);
+      padding: 0.4rem 0.75rem;
+      color: var(--text);
+      font-size: 0.8rem;
+    }
+    input[type="range"] {
+      accent-color: var(--accent);
+    }
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-top: 0.4rem;
+    }
+    .pill {
+      font-size: 0.7rem;
+      padding: 0.15rem 0.5rem;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.12);
+      color: var(--muted);
+    }
+    .cue-preview {
+      background: radial-gradient(circle at center, #222265 0, #04041a 75%);
+      border-radius: 14px;
+      padding: 1rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .cue-visual {
+      height: 140px;
+      position: relative;
+      margin-bottom: 0.5rem;
+    }
+    .cue-shaft {
+      position: absolute;
+      top: 50%;
+      left: 4%;
+      right: 12%;
+      height: 14px;
+      border-radius: 999px;
+      transform: translateY(-50%);
+      background: linear-gradient(90deg, #111, #222, #555);
+    }
+    .cue-wrap {
+      position: absolute;
+      top: 50%;
+      width: 20%;
+      height: 16px;
+      border-radius: 999px;
+      transform: translateY(-50%);
+      background: rgba(0,0,0,0.35);
+      border: 1px solid rgba(255,255,255,0.12);
+    }
+    .cue-tip {
+      position: absolute;
+      top: 50%;
+      right: 2%;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      transform: translateY(-50%);
+      background: #ddd;
+      box-shadow: 0 0 10px rgba(255,255,255,0.65);
+    }
+    .cue-ring {
+      position: absolute;
+      top: 50%;
+      width: 10%;
+      height: 20px;
+      border-radius: 999px;
+      transform: translateY(-50%);
+      border: 2px solid rgba(255,255,255,0.7);
+      box-shadow: 0 0 10px rgba(164,107,255,0.8);
+    }
+    .cue-meta {
+      font-size: 0.78rem;
+      color: var(--muted);
+      display: flex;
+      justify-content: space-between;
+      gap: 0.5rem;
+    }
+    .stat-line {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.75rem;
+      margin-top: 0.2rem;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      padding: 0.15rem 0.45rem;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.12);
+      font-size: 0.7rem;
+    }
+    .badge-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent2);
+    }
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 0.9rem;
+    }
+    button.primary {
+      border: none;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--accent2), var(--accent));
+      padding: 0.55rem 1.3rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #030310;
+    }
+    button.secondary {
+      border-radius: 999px;
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.14);
+      padding: 0.5rem 1rem;
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+    .note {
+      font-size: 0.7rem;
+      color: var(--muted);
+      margin-top: 0.4rem;
+    }
+    .chip-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+    }
+    .chip {
+      font-size: 0.7rem;
+      padding: 0.2rem 0.6rem;
+      border-radius: 999px;
+      background: rgba(50,184,198,0.12);
+      border: 1px solid rgba(50,184,198,0.35);
+      color: var(--accent);
+    }
+    .danger {
+      color: var(--danger);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div>
+      <div class="brand">cueXcoin World Trophy Show</div>
+      <div class="tagline">Design legendary NFT pool cues. Mint on-chain. Play to level them up.</div>
+    </div>
+    <button class="secondary" onclick="alert('Wallet connect coming soon (MetaMask / EVM chain).')">
+      Connect Wallet
+    </button>
+  </header>
+
+  <main>
+    <!-- LEFT: BUILDER FORM -->
+    <section class="card">
+      <h1>Create your NFT cue</h1>
+      <p class="sub">Choose materials, decal, and rarity. The final value and power score update in real time.</p>
+
+      <div class="builder-grid">
+        <div>
+          <h2>Materials</h2>
+
+          <div class="field">
+            <label for="coreSelect">Core material</label>
+            <select id="coreSelect">
+              <option value="0" selected>Golden-grain Chinese hardwood</option>
+              <option value="1">Black pearlwood</option>
+              <option value="2">Dragonbone reinforced maple</option>
+              <option value="3">Meteorite alloy</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="casingSelect">Shell / casing</label>
+            <select id="casingSelect">
+              <option value="0" selected>Obsidian shell</option>
+              <option value="1">Carbon fiber weave</option>
+              <option value="2">Jade inlay panels</option>
+              <option value="3">Platinum lattice</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="tipSelect">Tip & chalk</label>
+            <select id="tipSelect">
+              <option value="0" selected>Diamond break tip + stardust chalk</option>
+              <option value="1">Kevlar tip + friction chalk</option>
+              <option value="2">Soft control tip + blue nebula chalk</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="ringSelect">Elemental break ring</label>
+            <select id="ringSelect">
+              <option value="0" selected>Fire</option>
+              <option value="1">Water</option>
+              <option value="2">Storm</option>
+              <option value="3">Gravity</option>
+            </select>
+            <div class="pill-row">
+              <div class="pill">Fire = max power</div>
+              <div class="pill">Water = control</div>
+              <div class="pill">Storm = spin</div>
+              <div class="pill">Gravity = defense</div>
+            </div>
+          </div>
+
+          <h2 style="margin-top:1rem;">Rarity & staking</h2>
+
+          <div class="field">
+            <label for="raritySlider">Rarity tier</label>
+            <input id="raritySlider" type="range" min="0" max="5" value="2" />
+            <div class="stat-line">
+              <span id="rarityLabel">Extremely Rare</span>
+              <span id="rarityMultiplier">x2.0 mint multiplier</span>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="stakeInput">QX stake for mint (test)</label>
+            <input
+              id="stakeInput"
+              type="range"
+              min="10"
+              max="100"
+              step="10"
+              value="40"
+            />
+            <div class="stat-line">
+              <span id="stakeLabel">40 QX</span>
+              <span id="valueLabel">Est. cue value: 80 QX</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT: DECAL & SUMMARY -->
+        <div>
+          <h2>Decal & outline</h2>
+
+          <div class="field">
+            <label for="decalSelect">Decal pattern</label>
+            <select id="decalSelect">
+              <option value="0" selected>Dragon spine</option>
+              <option value="1">Webline striker</option>
+              <option value="2">Star vanguard</option>
+              <option value="3">Jade smash fractures</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label>Upload outline (concept)</label>
+            <button class="secondary" onclick="alert('Image upload + outline extraction will run off-chain and store an IPFS hash in the CueNFT contract metadata.')">
+              Upload reference image
+            </button>
+            <p class="note">
+              In production, your image becomes a black-and-white outline. You recolor it here and the hash is stored in the NFT.
+            </p>
+          </div>
+
+          <h2 style="margin-top:0.8rem;">Summary</h2>
+          <div class="chip-row" id="summaryChips"></div>
+          <p class="note">
+            This page is a UI shell. Later the “Mint cue NFT” button will call your CueNFT and GameEngine contracts on a testnet through MetaMask.
+          </p>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button class="primary" onclick="alert('In the full dapp, this will send a mint transaction to the CueNFT contract.')">
+          Mint cue NFT (testnet)
+        </button>
+        <button class="secondary" onclick="alert('Later this will preview your cue in the pool game canvas.')">
+          Preview in table view
+        </button>
+      </div>
+    </section>
+
+    <!-- RIGHT COLUMN: LIVE PREVIEW -->
+    <section class="card">
+      <h2>Live cue preview</h2>
+      <p class="sub">Colors and glow update when you change materials, rarity, and stake.</p>
+
+      <div class="cue-preview">
+        <div class="cue-visual">
+          <div id="cueShaft" class="cue-shaft"></div>
+          <div id="cueWrap" class="cue-wrap"></div>
+          <div id="cueRing" class="cue-ring"></div>
+          <div id="cueTip" class="cue-tip"></div>
+        </div>
+        <div class="cue-meta">
+          <div>
+            <div class="badge">
+              <span class="badge-dot"></span>
+              <span id="metaRarity">Extremely Rare cue</span>
+            </div>
+            <div class="stat-line">
+              <span>Element:</span>
+              <span id="metaElement">Fire</span>
+            </div>
+            <div class="stat-line">
+              <span>Power / Control:</span>
+              <span id="metaStats">82 / 74</span>
+            </div>
+          </div>
+          <div>
+            <div class="stat-line">
+              <span>Stake:</span>
+              <span id="metaStake">40 QX</span>
+            </div>
+            <div class="stat-line">
+              <span>Mint cost:</span>
+              <span id="metaMintCost">80 QX</span>
+            </div>
+            <div class="stat-line">
+              <span class="danger">On-chain:</span>
+              <span>Coming soon</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <p class="note">
+        In the final version, each match played with this cue updates its on-chain stats (matches played, wins, total score) through the GameEngine contract.
+      </p>
+    </section>
+  </main>
+
+  <script>
+    const rarityNames = [
+      "Common",
+      "Rare",
+      "Extremely Rare",
+      "Legendary",
+      "Mystical",
+      "Enchanted"
+    ];
+    const rarityMults = [1.0, 1.3, 2.0, 2.8, 3.5, 4.5];
+
+    const raritySlider = document.getElementById("raritySlider");
+    const rarityLabel = document.getElementById("rarityLabel");
+    const rarityMultiplier = document.getElementById("rarityMultiplier");
+    const stakeInput = document.getElementById("stakeInput");
+    const stakeLabel = document.getElementById("stakeLabel");
+    const valueLabel = document.getElementById("valueLabel");
+    const summaryChips = document.getElementById("summaryChips");
+
+    const ringSelect = document.getElementById("ringSelect");
+    const decalSelect = document.getElementById("decalSelect");
+    const coreSelect = document.getElementById("coreSelect");
+    const casingSelect = document.getElementById("casingSelect");
+    const tipSelect = document.getElementById("tipSelect");
+
+    const cueShaft = document.getElementById("cueShaft");
+    const cueWrap = document.getElementById("cueWrap");
+    const cueRing = document.getElementById("cueRing");
+    const cueTip = document.getElementById("cueTip");
+
+    const metaRarity = document.getElementById("metaRarity");
+    const metaElement = document.getElementById("metaElement");
+    const metaStats = document.getElementById("metaStats");
+    const metaStake = document.getElementById("metaStake");
+    const metaMintCost = document.getElementById("metaMintCost");
+
+    function updateFromUI() {
+      const rarity = parseInt(raritySlider.value, 10);
+      const mult = rarityMults[rarity];
+      const stake = parseInt(stakeInput.value, 10);
+
+      rarityLabel.textContent = rarityNames[rarity];
+      rarityMultiplier.textContent = `x${mult.toFixed(1)} mint multiplier`;
+      stakeLabel.textContent = `${stake} QX`;
+      const est = stake * mult;
+      valueLabel.textContent = `Est. cue value: ${est.toFixed(0)} QX`;
+
+      metaRarity.textContent = `${rarityNames[rarity]} cue`;
+      metaStake.textContent = `${stake} QX`;
+      metaMintCost.textContent = `${est.toFixed(0)} QX`;
+
+      const ringVal = parseInt(ringSelect.value, 10);
+      const elementNames = ["Fire", "Water", "Storm", "Gravity"];
+      metaElement.textContent = elementNames[ringVal];
+
+      let power = 60 + rarity * 5 + ringVal * 3 + stake / 4;
+      let control = 60 + (5 - ringVal) * 4 + rarity * 3;
+
+      power = Math.min(99, Math.round(power));
+      control = Math.min(99, Math.round(control));
+      metaStats.textContent = `${power} / ${control}`;
+
+      // Visual color mapping
+      const coreIdx = parseInt(coreSelect.value, 10);
+      const casingIdx = parseInt(casingSelect.value, 10);
+
+      const coreColors = ["#f5d09b", "#111111", "#b88a5d", "#6b7a8c"];
+      const casingColors = ["#141414", "#282f3b", "#0a5b47", "#c0c0da"];
+      const ringColors = ["#ff7b42", "#42c0ff", "#ffd447", "#9b59ff"];
+
+      cueShaft.style.background = `linear-gradient(90deg, #050505, ${
+        coreColors[coreIdx] || "#999"
+      })`;
+      cueWrap.style.left = "35%";
+      cueWrap.style.background = casingColors[casingIdx] || "#222";
+
+      cueRing.style.left = "55%";
+      cueRing.style.borderColor = ringColors[ringVal];
+      cueRing.style.boxShadow = `0 0 14px ${ringColors[ringVal]}`;
+
+      // Summary chips
+      summaryChips.innerHTML = "";
+      const chips = [
+        `Core: ${coreSelect.options[coreIdx].text}`,
+        `Shell: ${casingSelect.options[casingIdx].text}`,
+        `Tip: ${tipSelect.options[tipSelect.value].text}`,
+        `Ring: ${elementNames[ringVal]}`,
+        `Decal: ${decalSelect.options[decalSelect.value].text}`
+      ];
+      chips.forEach((text) => {
+        const div = document.createElement("div");
+        div.className = "chip";
+        div.textContent = text;
+        summaryChips.appendChild(div);
+      });
+    }
+
+    raritySlider.addEventListener("input", updateFromUI);
+    stakeInput.addEventListener("input", updateFromUI);
+    ringSelect.addEventListener("change", updateFromUI);
+    coreSelect.addEventListener("change", updateFromUI);
+    casingSelect.addEventListener("change", updateFromUI);
+    tipSelect.addEventListener("change", updateFromUI);
+    decalSelect.addEventListener("change", updateFromUI);
+
+    updateFromUI();
+  </script>
+</body>
+</html>
