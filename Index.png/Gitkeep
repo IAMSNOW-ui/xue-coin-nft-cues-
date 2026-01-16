@@ -1,0 +1,28 @@
+nft-pool-cue-builder/
+├── index.html                 # Main page with builder
+├── css/
+│   ├── style.css             # Global styles, mobile-first
+│   ├── components.css        # Component cards, buttons
+│   └── finalized.css         # Post-mint layout
+├── js/
+│   ├── builder.js            # 6-card logic, live preview
+│   ├── web3.js               # MetaMask minting
+│   ├── materials.js          # Rarity tiers + AI prompts
+│   └── storage.js            # Save final PNG + metadata
+├── assets/
+│   ├── materials/            # AI-generated part images
+│   │   ├── butt/             # Rosewood.png, Snakewood.png
+│   │   ├── wrap/             # Linen.png, MotherOfPearl.png
+│   │   ├── forearm/          # Maple.png, Ebony.png
+│   │   ├── joint/            # Brass.png, Titanium.png
+│   │   ├── shaft/            # Maple.png, CarbonFiber.png
+│   │   └── tip/              # Leather.png, Cobalt.png
+│   ├── previews/             # Live builder composited images
+│   └── finalized/            # Final minted cue PNGs
+│       └── cue_1234.png
+├── metadata/                 # NFT metadata JSONs
+│   └── 1234.json
+├── contracts/
+│   └── CueNFT.sol            # ERC721A with URI + attributes
+├── README.md
+└── package.json              # For npm deps (web3.js, etc.)
