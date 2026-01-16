@@ -2,44 +2,6 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>cueXcoin World Trophy Show</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <style>
-    body {
-      background:#050516;
-      color:#f8f2ff;
-      font-family: system-ui, sans-serif;
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      justify-content:center;
-      min-height:100vh;
-      text-align:center;
-    }
-    h1 { color:#a46bff; }
-    button {
-      margin-top:1rem;
-      padding:0.75rem 1.5rem;
-      border-radius:999px;
-      border:none;
-      background:#32b8c6;
-      color:#050516;
-      font-weight:600;
-    }
-  </style>
-</head>
-<body>
-  <h1>cueXcoin World Trophy Show</h1>
-  <p>Front-end placeholder deployed on Vercel. The pool game and NFT cue builder will be embedded here.</p>
-  <button onclick="alert('Coming soon: cue builder + pool game')">
-    Launch Demo
-  </button>
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
   <title>cueXcoin NFT Pool Cues</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
@@ -159,15 +121,49 @@
       border-radius: 999px;
       border: 1px solid rgba(255,255,255,0.12);
       color: var(--muted);
-    }<div class="cue-preview">
-  <div class="cue-visual" style="display:flex;align-items:center;justify-content:center;">
-    <img id="cueImage" src="/images/cue_base.png" alt="Cue preview"
-         style="max-width:100%;height:auto;filter:drop-shadow(0 0 12px rgba(0,0,0,0.9));" />
-  </div>
-  <div class="cue-meta">
-    ...
-  </div>
-</div>
+    }
+    .cue-preview {
+      background: radial-gradient(circle at center, #222265 0, #04041a 75%);
+      border-radius: 14px;
+      padding: 1rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .cue-visual {
+      height: 140px;
+      position: relative;
+      margin-bottom: 0.5rem;
+    }
+    .cue-shaft {
+      position: absolute;
+      top: 50%;
+      left: 4%;
+      right: 12%;
+      height: 14px;
+      border-radius: 999px;
+      transform: translateY(-50%);
+      background: linear-gradient(90deg, #111, #222, #555);
+    }
+    .cue-wrap {
+      position: absolute;
+      top: 50%;
+      width: 20%;
+      height: 16px;
+      border-radius: 999px;
+      transform: translateY(-50%);
+      background: rgba(0,0,0,0.35);
+      border: 1px solid rgba(255,255,255,0.12);
+    }
+    .cue-tip {
+      position: absolute;
+      top: 50%;
+      right: 2%;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      transform: translateY(-50%);
+      background: #ddd;
+      box-shadow: 0 0 10px rgba(255,255,255,0.65);
     }
     .cue-ring {
       position: absolute;
